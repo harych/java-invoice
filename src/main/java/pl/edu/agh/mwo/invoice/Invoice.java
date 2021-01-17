@@ -13,10 +13,6 @@ public class Invoice {
 		this.products = new ArrayList<Product>();
 	}
 
-	public Invoice(Collection<Product> products) {
-		this.products = products;
-	}
-
 	public void addProduct(Product product) {
 		this.products.add(product);
 	}
