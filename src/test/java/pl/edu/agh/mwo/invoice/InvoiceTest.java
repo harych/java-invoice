@@ -18,7 +18,7 @@ public class InvoiceTest {
 
     @Before
     public void createEmptyInvoiceForTheTest() {
-        invoice = new Invoice();
+        invoice = new Invoice(12345);
     }
 
     @Test
@@ -100,8 +100,8 @@ public class InvoiceTest {
         invoice.addProduct(new TaxFreeProduct("Tablet", new BigDecimal("1678")), 0);
     }
 
-    @Test(expected = IllegalArgumentException.class)
-    public void testInvoiceWithNegativeQuantity() {
-        invoice.addProduct(new DairyProduct("Zsiadle mleko", new BigDecimal("5.55")), -1);
+    @Test
+    public void testInvoiceNumber() {
+        Assert.assertEquals(invoice.getInvoiceNumber(), "INV/2021/03/12345");
     }
 }

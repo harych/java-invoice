@@ -1,6 +1,8 @@
 package pl.edu.agh.mwo.invoice;
 
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -8,6 +10,17 @@ import pl.edu.agh.mwo.invoice.product.Product;
 
 public class Invoice {
 	private Map<Product,Integer> products = new LinkedHashMap<>();
+	private String invoiceNumber;
+	
+	Invoice(int id){
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy/MM");  
+		Date date = new Date(); 
+		invoiceNumber = "INV/" + formatter.format(date) + "/" +id;
+	}
+
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
 
 	public void addProduct(Product product) {
 		this.products.put(product, 1);
