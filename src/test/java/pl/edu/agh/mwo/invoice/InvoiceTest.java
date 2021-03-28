@@ -97,6 +97,8 @@ public class InvoiceTest {
         invoice.addProduct(new TaxFreeProduct("Tablet", new BigDecimal("1678")), 0);
     }
 
+//  Tests related to TDD exercise:   
+    
     @Test
     public void testInvoiceNumber() {
         Assert.assertEquals(invoice.getInvoiceNumber(), "INV/2021/03/12345");
