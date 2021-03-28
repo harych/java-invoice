@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Invoice.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-invoice</a> &gt; <a href="index.source.html" class="el_package">pl.edu.agh.mwo.invoice</a> &gt; <span class="el_source">Invoice.java</span></div><h1>Invoice.java</h1><pre class="source lang-java linenums">package pl.edu.agh.mwo.invoice;
+
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
+import pl.edu.agh.mwo.invoice.product.Product;
+
+public class Invoice {
+<span class="fc" id="L14">	private Map&lt;Product,Integer&gt; products = new LinkedHashMap&lt;&gt;();</span>
+	private String invoiceNumber;
+	
+<span class="fc" id="L17">	Invoice(int id){</span>
+<span class="fc" id="L18">		SimpleDateFormat formatter = new SimpleDateFormat(&quot;yyyy/MM&quot;);  </span>
+<span class="fc" id="L19">		Date date = new Date(); </span>
+<span class="fc" id="L20">		invoiceNumber = &quot;INV/&quot; + formatter.format(date) + &quot;/&quot; +id;</span>
+<span class="fc" id="L21">	}</span>
+
+	public String getInvoiceNumber() {
+<span class="fc" id="L24">		return invoiceNumber;</span>
+	}
+
+	public void addProduct(Product product) {
+<span class="fc" id="L28">		this.addProduct(product, 1);	</span>
+<span class="fc" id="L29">	}</span>
+
+	public void addProduct(Product product, Integer quantity) {
+<span class="fc bfc" id="L32" title="All 2 branches covered.">		if (quantity &lt;= 0) {</span>
+<span class="fc" id="L33">			throw new IllegalArgumentException(&quot;Incorrect quantity&quot;);</span>
+		} else {
+<span class="fc" id="L35">			Boolean duplicate = false;</span>
+<span class="fc" id="L36">			Integer oldQuantity = 0;</span>
+<span class="fc bfc" id="L37" title="All 2 branches covered.">			for (Product p : products.keySet()) {</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">				if (p.getName().equals(product.getName())) {</span>
+<span class="fc" id="L39">					oldQuantity = products.get(p);</span>
+<span class="fc" id="L40">					products.remove(p);</span>
+<span class="fc" id="L41">					duplicate = true;</span>
+<span class="fc" id="L42">					products.put(product, oldQuantity + quantity);</span>
+				}
+<span class="fc" id="L44">			}</span>
+<span class="fc bfc" id="L45" title="All 2 branches covered.">			if (!duplicate) {</span>
+<span class="fc" id="L46">				this.products.put(product, quantity);</span>
+			}	
+		}
+<span class="fc" id="L49">	}</span>
+
+	public BigDecimal getSubtotal() {
+<span class="fc" id="L52">		BigDecimal subtotal = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		for (Product product : products.keySet()) {</span>
+<span class="fc" id="L54">			BigDecimal quantity = new BigDecimal(products.get(product));</span>
+<span class="fc" id="L55">			subtotal = subtotal.add(product.getPrice().multiply(quantity));</span>
+<span class="fc" id="L56">		}</span>
+<span class="fc" id="L57">		return subtotal;</span>
+	}
+
+	public BigDecimal getTax() {
+<span class="fc" id="L61">		BigDecimal tax = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L62" title="All 2 branches covered.">		for (Product product : products.keySet()) {</span>
+<span class="fc" id="L63">			BigDecimal quantity = new BigDecimal(products.get(product));</span>
+<span class="fc" id="L64">			tax = tax.add(product.getPrice().multiply(product.getTaxPercent()).multiply(quantity));</span>
+<span class="fc" id="L65">		}</span>
+<span class="fc" id="L66">		return tax;</span>
+	}
+
+	public BigDecimal getTotal() {
+<span class="fc" id="L70">		BigDecimal total = BigDecimal.ZERO;</span>
+<span class="fc bfc" id="L71" title="All 2 branches covered.">		for (Product product : products.keySet()) {</span>
+<span class="fc" id="L72">			BigDecimal quantity = new BigDecimal(products.get(product));</span>
+<span class="fc" id="L73">			total = total.add(product.getPriceWithTax().multiply(quantity));</span>
+<span class="fc" id="L74">		}</span>
+<span class="fc" id="L75">		return total;</span>
+	}
+	public String toString() {
+<span class="fc" id="L78">		String result = this.invoiceNumber;</span>
+<span class="fc" id="L79">		DecimalFormat df = new DecimalFormat(&quot;#,##0.00&quot;);</span>
+<span class="fc" id="L80">		Integer productsCount = 0;</span>
+		
+<span class="fc bfc" id="L82" title="All 2 branches covered.">		for (Entry&lt;Product, Integer&gt; entry : products.entrySet()) {</span>
+<span class="fc" id="L83">			String name = entry.getKey().getName();</span>
+<span class="fc" id="L84">			Integer quantity = entry.getValue();</span>
+<span class="fc" id="L85">			BigDecimal price = entry.getKey().getPrice();</span>
+<span class="fc" id="L86">			result += &quot;\r\nNazwa: &quot; + name + &quot;, Liczba sztuk: &quot; + quantity + &quot;, Cena: &quot; + df.format(price);</span>
+<span class="fc" id="L87">			productsCount += 1;</span>
+<span class="fc" id="L88">		}</span>
+<span class="fc" id="L89">		result += &quot;\r\nLiczba pozycji: &quot; + productsCount;</span>
+<span class="fc" id="L90">		return result;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

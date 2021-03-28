@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FuelCanister.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">java-invoice</a> &gt; <a href="index.source.html" class="el_package">pl.edu.agh.mwo.invoice.product</a> &gt; <span class="el_source">FuelCanister.java</span></div><h1>FuelCanister.java</h1><pre class="source lang-java linenums">package pl.edu.agh.mwo.invoice.product;
+
+import java.math.BigDecimal;
+
+public class FuelCanister extends Product {
+    public FuelCanister(String name, BigDecimal price) {
+<span class="fc" id="L7">        super(name, price, BigDecimal.ZERO);</span>
+<span class="fc" id="L8">    }</span>
+    public BigDecimal getPriceWithTax() {
+<span class="fc" id="L10">        return super.price.add(super.price.multiply(super.taxPercent).add(new BigDecimal(&quot;5.65&quot;)));</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.6.202009150832</span></div></body></html>

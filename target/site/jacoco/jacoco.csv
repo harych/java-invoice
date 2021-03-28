@@ -1,0 +1,8 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+java-invoice,pl.edu.agh.mwo.invoice.product,Product,0,52,0,8,0,13,0,9,0,5
+java-invoice,pl.edu.agh.mwo.invoice.product,FuelCanister,0,20,0,0,0,3,0,2,0,2
+java-invoice,pl.edu.agh.mwo.invoice.product,DairyProduct,0,9,0,0,0,2,0,1,0,1
+java-invoice,pl.edu.agh.mwo.invoice.product,TaxFreeProduct,0,6,0,0,0,2,0,1,0,1
+java-invoice,pl.edu.agh.mwo.invoice.product,BottleOfWine,0,23,0,0,0,3,0,2,0,2
+java-invoice,pl.edu.agh.mwo.invoice.product,OtherProduct,0,9,0,0,0,2,0,1,0,1
+java-invoice,pl.edu.agh.mwo.invoice,Invoice,0,293,0,16,0,53,0,16,0,8
